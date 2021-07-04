@@ -1,0 +1,49 @@
+<ion-header>
+  <ion-toolbar color="dark">
+    <ion-buttons>
+      <ion-back-button
+        color="tertiary"
+        defaultHref="/"
+        text=""
+      ></ion-back-button>
+    </ion-buttons>
+    <ion-title> {{task.title}} </ion-title>
+  </ion-toolbar>
+</ion-header>
+
+<ion-content color="dark">
+  <ion-list>
+    <ion-item color="dark">
+      <ion-label position="floating">New Item</ion-label>
+      <ion-input
+        type="text"
+        (keyup.enter)="addItemToTask()"
+        [(ngModel)]="itemName"
+      ></ion-input>
+    </ion-item>
+  </ion-list>
+  <ion-list *ngIf="task.items.length > 0">
+    <ion-list-header color="dark">
+      <ion-label>Pending tasks</ion-label>
+    </ion-list-header>
+    <ion-item-sliding
+      *ngFor="let item of task.items; let i = index"
+      class="animated fadeInDown"
+    >
+      <ion-item color="dark">
+        <ion-checkbox
+          [(ngModel)]="item.done"
+          color="tertiary"
+          slot="start"
+          (ionChange)="changeCheck(item)"
+        ></ion-checkbox>
+        <ion-label> {{item.description}} </ion-label>
+      </ion-item>
+      <ion-item-options side="end">
+        <ion-item-option (click)="removeItem(i)" color="danger"
+          ><ion-icon name="trash-outline"></ion-icon
+        ></ion-item-option>
+      </ion-item-options>
+    </ion-item-sliding>
+  </ion-list>
+</ion-content>
